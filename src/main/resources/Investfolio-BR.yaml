@@ -1,0 +1,54 @@
+swagger: "2.0"
+info:
+  title: Title
+  description: Title
+  version: 1.0.0
+host: www
+schemes:
+  - https
+paths:
+  /transactions/{userId}:
+    get:
+      operationId: retrieveTransactions
+      description: Returns all transactions made by user
+      tags:
+        - Transactions
+      parameters:
+        - in: path
+          name: userId
+          description: The user unique Id
+          type: string
+          required: true
+      responses:
+        200:
+          description: The userId was found and the transactions were retrieved
+          schema:
+            $ref: "#/definitions/TransactionResponse"
+        404:
+          description: There was no transaction for this user
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: The user token is invalid
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        400:
+          description: Wrong parameters
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        500:
+          description: Internal server error
+          schema:
+            $ref: "#/definitions/ErrorModel"
+
+definitions:
+  ErrorModel:
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+  TransactionResponse:
+    type: string
+  
